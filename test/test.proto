@@ -1,0 +1,55 @@
+//声明protobuf版本
+syntax = "proto3";
+
+
+//声明代码包，在C++中就是命名空间(namespace)
+package test_protoc;
+
+//表示生成service服务类和rpc方法描述，默认不生成
+option cc_generic_services = true;
+
+message ResultCode
+{
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+//登录请求的消息（参数）类型
+message LoginRequest
+{
+    bytes name = 1;
+    bytes pwd = 2;
+}
+//响应
+message LoginResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+message GetlistRequest
+{
+    uint32 userid = 1;
+}
+message User
+{
+    bytes name = 1;
+    enum Sex
+    {
+        WOMAN = 0;
+        WAN = 1;
+    }
+    Sex sex = 3;
+}
+
+message GetlistResponse
+{
+    ResultCode result = 1;
+    repeated User friend_list = 2; // 定义了一个列表类型
+}
+
+//定义描述rpc方法的类型 ---- service
+service UserServiceRpc
+{
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc Getlists(GetlistRequest) returns(GetlistResponse);
+}

@@ -1,1 +1,3 @@
-# mprpc
+一个简易的分布式网络通信框架
+基于muduo网络库、protobuf 开发
+用zookeeper做服务配置中心
